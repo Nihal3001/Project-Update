@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>𝐌</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
+  </head>
+  <body>
+    <div class="container" style="margin-bottom: 18rem">
+      <h2 class="title">Multiplication of Matrices</h2>
+      <hr />
+      <form
+        action="/multiply"
+        method="post"
+        enctype="multipart/form-data"
+        id="upload"
+      >
+        <div>
+          <div class="row">
+            <label for="A">Matrix 1:</label>
+            <input type="file" name="A" id="A" />
+          </div>
+          <div class="row">
+            <label for="B">Matrix 2:</label>
+            <input type="file" name="B" id="A" />
+          </div>
+          <div class="row">
+            <label for="deadline">Deadline (ms):</label>
+            <input
+              type="number"
+              name="deadline"
+              id="deadline"
+              placeholder="100"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="button-primary"
+          style="margin-top: 60px; background: black;"
+        >
+          Multiply
+        </button>
+      </form>
+
+      <p class="error"></p>
+      <table class="matrix"></table>
+    </div>
+  </body>
+
+  <script>
+    (async () => {
+      document.querySelector("#deadline").value = "50";
+      const upload = document.querySelector("#upload");
+
+      upload.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const error = document.querySelector(".error");
+        error.innerHTML = "";
+
+        const response = await fetch(event.target.action, {
+          method: "POST",
+          headers: {},
+          body: new FormData(event.target),
+        });
+
+        const json = await response.json();
+
+        if (json.hasOwnProperty("error")) {
+          console.log("Error uploading: ", json.error);
+          error.innerHTML = json.error;
+          return;
+        }
+
+        const matrix = json;
+        const table = document.querySelector(".matrix");
+
+        let result = "";
+        for (let i = 0; i < matrix.length; i++) {
+          result += "<tr>";
+          for (let j = 0; j < matrix[i].length; j++) {
+            result += "<td>" + matrix[i][j] + "</td>";
+          }
+          result += "</tr>";
+        }
+        table.innerHTML = result;
+      });
+    })();
+  </script>
+</html>

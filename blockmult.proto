@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+service BlockMultService {
+  rpc MultiplyBlock (Params) returns (Response);
+  rpc AddBlock (Params) returns (Response);
+}
+
+message Params {
+  repeated Block A = 1;
+  repeated Block B = 2;
+  int32 MAX = 3;
+}
+
+message Response {
+  repeated Block block = 1;
+}
+
+message Block {
+  repeated int32 array = 1;
+}
