@@ -1,0 +1,30 @@
+GRPC scaling for matrix multiplication 
+
+This project was by using the divide and conquer method for matrix multiplication.
+
+In the grpc server, 8 instances were used.
+
+functions such as addBlock and multiplyBlock were used and in the user side over 
+the front end 2 .txt files can be uploaded as input with matrices in them to 
+get the output.
+
+these input files are uploaded to the REST API and then the rest api uses the grpc server to call our
+functions in the server
+
+this is where the scaling part comes in, the number of instances to which our client connects is calculated 
+by the iteration of footprint, number of calls being made and deadline given.
+
+the two files uploaded as inputs must have the following:
+rows separated by new lines
+numbers separated by spaces
+.txt extensions
+matrices with dimensions in the power of 2.
+
+
+
+to execute 
+
+npm run server:grpc
+npm run serber:rest
+
+local host ---- 8080.
